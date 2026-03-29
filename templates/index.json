@@ -12,9 +12,15 @@
     "main": {
       "type": "hello-world",
       "settings": {}
+    },
+    "hello_world_qGcF9p": {
+      "type": "hello-world",
+      "name": "Hello World Template",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "hello_world_qGcF9p"
   ]
 }

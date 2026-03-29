@@ -554,6 +554,41 @@ video {
   display: none;
 }
 
+:root {
+  /* Font Aileleri */
+  --font-heading-family: 'Playfair Display', serif;
+  --font-body-family: 'Inter', sans-serif;
+  /* Renk Paleti */
+  --color-lyra-primary: #c5a381;
+  --color-lyra-bg: #fbf9f7;
+  --color-lyra-text: #2d2d2d;
+}
+
+body {
+  font-family: var(--font-body-family);
+  background-color: var(--color-lyra-bg);
+  color: var(--color-lyra-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  font-weight: 400;
+  /* Body genelde 400 (Regular) olur */
+}
+
+/* Başlıklar İçin Global Ayrım */
+
+h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+
 .fixed {
   position: fixed;
 }
@@ -599,12 +634,24 @@ video {
   background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
 }
 
+.bg-lyra-bg {
+  background-color: var(--color-lyra-bg);
+}
+
+.bg-lyra-primary {
+  background-color: var(--color-lyra-primary);
+}
+
 .p-8 {
   padding: 2rem;
 }
 
 .italic {
   font-style: italic;
+}
+
+.text-lyra-primary {
+  color: var(--color-lyra-primary);
 }
 
 .filter {

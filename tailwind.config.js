@@ -5,25 +5,20 @@ module.exports = {
 		'./sections/*.liquid',
 		'./snippets/*.liquid',
 		'./templates/*.liquid',
-		'./templates/customers/*.liquid',
 		'./assets/*.js',
 	],
 	theme: {
 		extend: {
-			colors: {
-				'lyra-bg': '#FBF9F7',
-				'lyra-gold': '#C5A381',
-				'lyra-champagne': '#E8D5C4',
-				'lyra-text': '#2D2D2D',
-			},
 			fontFamily: {
-				heading: ['"Playfair Display"', 'serif'],
-				body: ['Inter', 'sans-serif'],
+				// CSS değişkenlerimize bağlıyoruz
+				heading: ['var(--font-heading-family)'],
+				body: ['var(--font-body-family)'],
 			},
-			spacing: {
-				18: '4.5rem',
+			colors: {
+				'lyra-primary': 'var(--color-lyra-primary)',
+				'lyra-bg': 'var(--color-lyra-bg)',
+				'lyra-text': 'var(--color-lyra-text)',
 			},
 		},
 	},
-	plugins: [],
 };

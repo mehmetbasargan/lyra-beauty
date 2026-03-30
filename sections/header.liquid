@@ -45,13 +45,13 @@
       </div>
     </div>
 
-    <nav class="hidden lg:flex justify-center border-t border-lyra-line/20 shrink-0">
-      <ul class="flex items-center">
+    <nav class="hidden lg:flex justify-center border-t border-lyra-line/20 w-full relative">
+      <ul class="flex items-center flex-nowrap shrink-0">
         {% for link in linklists[section.settings.menu].links %}
           <li class="relative group shrink-0">
             <a
               href="{{ link.url }}"
-              class="!mb-0 px-6 py-5 inline-block text-lyra-text group-hover:text-lyra-primary transition-colors uppercase tracking-[0.18em] shrink-0 text-[14px]"
+              class="!mb-0 py-5 px-4 inline-block text-lyra-text group-hover:text-lyra-primary transition-colors uppercase tracking-[0.15em] text-[13px] whitespace-nowrap"
             >
               {{ link.title }}
               {% if link.links != blank %}
@@ -67,12 +67,12 @@
             </a>
 
             {% if link.links != blank %}
-              <ul class="absolute left-1/2 -translate-x-1/2 top-full w-56 bg-white border border-lyra-line/30 shadow-2xl py-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-[110] shrink-0">
+              <ul class="absolute left-1/2 -translate-x-1/2 top-full w-64 bg-white border border-lyra-line/30 shadow-2xl py-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-[999] pointer-events-none group-hover:pointer-events-auto">
                 {% for childlink in link.links %}
-                  <li>
+                  <li class="whitespace-nowrap">
                     <a
                       href="{{ childlink.url }}"
-                      class="block px-8 py-2.5  uppercase tracking-[0.2em] text-lyra-text/70 hover:text-lyra-primary hover:bg-lyra-bg transition-all font-body"
+                      class="block px-8 py-2.5 text-[11px] uppercase tracking-[0.2em] text-lyra-text/70 hover:text-lyra-primary hover:bg-lyra-bg transition-all font-body"
                     >
                       {{ childlink.title }}
                     </a>

@@ -675,6 +675,10 @@ h6 {
 
 /* 3. Text Button (Sadece Metin/Link) */
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .invisible {
   visibility: hidden;
 }
@@ -713,6 +717,10 @@ h6 {
 
 .z-\[110\] {
   z-index: 110;
+}
+
+.z-\[999\] {
+  z-index: 999;
 }
 
 .mx-auto {
@@ -792,6 +800,10 @@ h6 {
   width: 100%;
 }
 
+.w-64 {
+  width: 16rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -816,6 +828,10 @@ h6 {
 
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
 }
 
 .items-center {
@@ -844,6 +860,10 @@ h6 {
   --tw-space-x-reverse: 0;
   margin-right: calc(1.5rem * var(--tw-space-x-reverse));
   margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 
 .rounded-full {
@@ -920,6 +940,16 @@ h6 {
   padding-bottom: 1.5rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .font-body {
   font-family: var(--font-body), sans-serif;
 }
@@ -949,6 +979,14 @@ h6 {
   font-size: 14px;
 }
 
+.text-\[11px\] {
+  font-size: 11px;
+}
+
+.text-\[13px\] {
+  font-size: 13px;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -975,6 +1013,10 @@ h6 {
 
 .tracking-\[0\.2em\] {
   letter-spacing: 0.2em;
+}
+
+.tracking-\[0\.15em\] {
+  letter-spacing: 0.15em;
 }
 
 .text-lyra-text {
@@ -1039,6 +1081,10 @@ h6 {
 
 .hover\:text-lyra-primary:hover {
   color: var(--color-lyra-primary);
+}
+
+.group:hover .group-hover\:pointer-events-auto {
+  pointer-events: auto;
 }
 
 .group:hover .group-hover\:visible {

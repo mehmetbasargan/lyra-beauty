@@ -8,11 +8,13 @@
  * ------------------------------------------------------------
  */
 {
-	"sections": {
-		"main": {
-			"type": "wishlist",
-			"settings": {}
-		}
-	},
-	"order": ["main"]
+  "sections": {
+    "main": {
+      "type": "our-story",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
 }

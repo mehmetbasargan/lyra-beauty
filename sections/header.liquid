@@ -13,7 +13,11 @@
         <button id="mobile-menu-trigger" type="button" class="lg:hidden text-lyra-text p-1" aria-label="Open Menu">
           {% render 'icon-menuIcon' %}
         </button>
-        <button type="button" class="hidden lg:block text-lyra-text hover:text-lyra-primary transition-colors">
+        <button
+          id="search-trigger-desktop"
+          type="button"
+          class="hidden lg:block text-lyra-text hover:text-lyra-primary transition-colors"
+        >
           {% render 'icon-search' %}
         </button>
       </div>
@@ -210,6 +214,56 @@
         {% render 'icon-account' %}
         <span>Account</span>
       </a>
+    </div>
+  </div>
+</div>
+
+<div id="search-popup" class="fixed inset-0 z-[3000] invisible">
+  <div
+    id="search-overlay"
+    class="absolute inset-0 bg-black/20 backdrop-blur-md opacity-0 transition-opacity duration-500"
+  ></div>
+
+  <div
+    id="search-panel"
+    class="absolute top-0 left-0 w-full bg-white shadow-2xl transform -translate-y-full transition-transform duration-500 ease-in-out"
+  >
+    <div class="container mx-auto px-6 py-12 md:py-20">
+      <div class="max-w-3xl mx-auto">
+        <button
+          id="search-close"
+          class="absolute top-6 right-6 p-2 text-lyra-text hover:rotate-90 transition-transform duration-300"
+        >
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M6 18L18 6M6 6l12 12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+
+        <form action="{{ routes.search_url }}" method="get" role="search" class="relative">
+          <input
+            type="text"
+            name="q"
+            placeholder="ARAMAK İSTEDİĞİNİZ ÜRÜNÜ YAZIN..."
+            class="w-full bg-transparent border-b-2 border-lyra-line focus:border-lyra-primary py-4 text-2xl md:text-4xl font-heading uppercase tracking-widest outline-none transition-colors"
+            autocomplete="off"
+          >
+          <button type="submit" class="absolute right-0 top-1/2 -translate-y-1/2">
+            {% render 'icon-search' %}
+          </button>
+        </form>
+
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-[10px] uppercase tracking-[0.2em] text-lyra-text/50 mb-4 font-bold">Popüler Kategoriler</h3>
+            <ul class="space-y-2 text-sm uppercase tracking-widest font-heading">
+              <li><a href="#" class="hover:text-lyra-primary">Cilt Bakımı</a></li>
+              <li><a href="#" class="hover:text-lyra-primary">Makyaj</a></li>
+              <li><a href="#" class="hover:text-lyra-primary">Parfüm</a></li>
+            </ul>
+          </div>
+          <div id="predictive-results"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

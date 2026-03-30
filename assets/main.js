@@ -70,3 +70,51 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Scroll dinleyicisi (performans için throttle eklenebilir ama bu haliyle de stabildir)
 	window.addEventListener('scroll', handleScroll);
 });
+
+// Search Popup
+document.addEventListener('DOMContentLoaded', () => {
+	const searchPopup = document.getElementById('search-popup');
+	const searchPanel = document.getElementById('search-panel');
+	const searchOverlay = document.getElementById('search-overlay');
+	const searchTriggers = [
+		document.getElementById('search-trigger-desktop'),
+		document.getElementById('search-trigger-mobile'),
+	];
+	const searchClose = document.getElementById('search-close');
+	const searchInput = searchPopup.querySelector('input[name="q"]');
+
+	const openSearch = (e) => {
+		if (e) e.preventDefault();
+		searchPopup.classList.remove('invisible');
+		// Kısa bir delay ile animasyonu başlatıyoruz
+		setTimeout(() => {
+			searchOverlay.classList.add('opacity-100');
+			searchPanel.classList.remove('-translate-y-full');
+			searchInput.focus(); // Açılınca direkt klavye odaklanır
+		}, 10);
+		document.body.style.overflow = 'hidden'; // Arka plan kaymasın
+	};
+
+	const closeSearch = () => {
+		searchOverlay.classList.remove('opacity-100');
+		searchPanel.classList.add('-translate-y-full');
+		setTimeout(() => {
+			searchPopup.classList.add('invisible');
+		}, 500);
+		document.body.style.overflow = '';
+	};
+
+	searchTriggers.forEach((trigger) => {
+		if (trigger) trigger.addEventListener('click', openSearch);
+	});
+
+	if (searchClose) searchClose.addEventListener('click', closeSearch);
+	if (searchOverlay) searchOverlay.addEventListener('click', closeSearch);
+
+	// ESC tuşu ile kapatma
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && !searchPopup.classList.contains('invisible')) {
+			closeSearch();
+		}
+	});
+});

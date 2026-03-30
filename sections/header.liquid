@@ -8,7 +8,7 @@
   data-section-type="header"
 >
   <div class="container mx-auto px-4 md:px-8">
-    <div class="flex items-center justify-between py-4">
+    <div class="flex items-center justify-between py-2">
       <div class="flex flex-1 items-center space-x-5">
         <button id="mobile-menu-trigger" type="button" class="lg:hidden text-lyra-text p-1" aria-label="Open Menu">
           {% render 'icon-menuIcon' %}
@@ -36,15 +36,60 @@
       </div>
 
       <div class="flex flex-1 items-center justify-end space-x-6">
-        <a href="#" class="hidden md:block text-lyra-text hover:text-lyra-primary transition-colors">
+        <a href="#" class="block lg:hidden text-lyra-text hover:text-lyra-primary transition-colors">
+          {% render 'icon-search' %}
+        </a>
+        <a href="#" class="text-lyra-text hover:text-lyra-primary transition-colors">
           {%- render 'icon-wishlist' -%}
         </a>
-        <a
-          href="{{ routes.account_url }}"
-          class="hidden md:block text-lyra-text hover:text-lyra-primary transition-colors"
-        >
-          {%- render 'icon-account' -%}
-        </a>
+
+        <style>
+          /* Bileşenin içindeki varsayılanları temizle */
+          shopify-account::part(signed-out-avatar),
+          shopify-account::part(signed-in-avatar) {
+            background: transparent !important;
+            padding: 0 !important;
+            width: 32px;
+            height: 32px;
+          }
+
+          .account-initials-circle {
+            width: 32px;
+            height: 32px;
+            background-color: var(--lyra-primary, #000);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+          }
+
+          .account-icon-svg svg {
+            width: 24px;
+            height: 24px;
+            display: block;
+          }
+        </style>
+
+        <div class="hidden md:block account-wrapper relative">
+          <shopify-account menu="customer-account-main-menu">
+            <div slot="signed-out-avatar" class="account-icon-svg">
+              {% render 'icon-account' %}
+            </div>
+
+            <div slot="signed-in-avatar">
+              <div id="js-account-initials" class="account-initials-circle">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
+                </svg>
+              </div>
+            </div>
+          </shopify-account>
+        </div>
+
         <a href="{{ routes.cart_url }}" class="relative text-lyra-text hover:text-lyra-primary transition-colors">
           {% render 'icon-shop' %}
           <span class="absolute -top-2 -right-2 bg-lyra-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-body">
@@ -98,6 +143,7 @@
     </nav>
   </div>
 
+  {% comment %} Mobile Menu Drawer {% endcomment %}
   <div id="mobile-menu-drawer" class="fixed inset-0 z-[2000] lg:hidden invisible transition-all duration-300">
     <div
       id="mobile-menu-overlay"

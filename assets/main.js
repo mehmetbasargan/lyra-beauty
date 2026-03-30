@@ -1,5 +1,6 @@
+// Mobile menu script
 document.addEventListener('DOMContentLoaded', () => {
-	console.log('Header Scripti Yüklendi! 🚀'); // Bu yazıyı konsolda görmelisin
+	console.log('Mobile menu script loaded! 🚀');
 
 	const trigger = document.getElementById('mobile-menu-trigger');
 	const closeBtn = document.getElementById('mobile-menu-close');
@@ -48,4 +49,24 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	});
+});
+
+// Sticky Header
+document.addEventListener('DOMContentLoaded', () => {
+	const header = document.querySelector('header');
+	const scrollThreshold = 100; // Kaç piksel sonra yapışsın?
+
+	const handleScroll = () => {
+		if (window.scrollY > scrollThreshold) {
+			header.classList.add('is-sticky');
+		} else {
+			header.classList.remove('is-sticky');
+		}
+	};
+
+	// Sayfa yüklendiğinde de kontrol et (yenileme durumunda)
+	handleScroll();
+
+	// Scroll dinleyicisi (performans için throttle eklenebilir ama bu haliyle de stabildir)
+	window.addEventListener('scroll', handleScroll);
 });

@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"tailwind:watch": "tailwindcss -i ./assets/tailwind-input.css -o ./assets/style-output.css --watch",
-		"shopify:dev": "shopify theme dev --store=lyrabeautydev.myshopify.com --theme-editor-sync",
+		"shopify:dev": "shopify theme dev --store=lyrabeautydev.myshopify.com --theme-editor-sync --store-password=beanti",
 		"dev": "concurrently \"npm run tailwind:watch\" \"npm run shopify:dev\""
 	},
 	"dependencies": {

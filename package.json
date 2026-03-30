@@ -8,7 +8,9 @@
 		"shopify:dev": "shopify theme dev --store=lyrabeautydev.myshopify.com --theme-editor-sync",
 		"dev": "concurrently \"npm run tailwind:watch\" \"npm run shopify:dev\""
 	},
-	"dependencies": {},
+	"dependencies": {
+		"alpinejs": "^3.15.9"
+	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",

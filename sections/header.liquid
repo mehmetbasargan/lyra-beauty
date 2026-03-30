@@ -1,12 +1,16 @@
+{% comment %}
+  En dıştaki div'e x-data ekleyerek Alpine.js'i bu section için aktif ediyoruz.
+{% endcomment %}
+
 <header
-  class="w-full bg-white border-b border-lyra-line relative z-[100]"
+  class="w-full bg-white border-b border-lyra-line relative z-[110]"
   data-section-id="{{ section.id }}"
   data-section-type="header"
 >
   <div class="container mx-auto px-4 md:px-8">
-    <div class="flex items-center justify-between py-6">
+    <div class="flex items-center justify-between py-4">
       <div class="flex flex-1 items-center space-x-5">
-        <button type="button" class="lg:hidden text-lyra-text" aria-label="Open Menu">
+        <button id="mobile-menu-trigger" type="button" class="lg:hidden text-lyra-text p-1" aria-label="Open Menu">
           {% render 'icon-menuIcon' %}
         </button>
         <button type="button" class="hidden lg:block text-lyra-text hover:text-lyra-primary transition-colors">
@@ -15,75 +19,152 @@
       </div>
 
       <div class="flex-none">
-        <a href="/" class="inline-block">
-          <h1 class="font-heading text-3xl md:text-4xl font-bold tracking-[0.25em] uppercase text-lyra-text leading-none">
-            LYRA
-          </h1>
+        <a href="{{ routes.root_url }}" class="inline-block">
+          {%- if section.settings.logo != blank -%}
+            {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
+            {{
+              section.settings.logo
+              | image_url: width: 300
+              | image_tag: class: 'h-auto mx-auto', widths: '100, 200, 300', alt: logo_alt
+            }}
+          {%- else -%}
+            <h1 class="font-heading text-xl md:text-2xl font-bold tracking-[0.1em] uppercase text-lyra-text leading-none">
+              {{ shop.name }}
+            </h1>
+          {%- endif -%}
         </a>
       </div>
 
       <div class="flex flex-1 items-center justify-end space-x-6">
+        <a href="#" class="hidden md:block text-lyra-text hover:text-lyra-primary transition-colors">
+          {%- render 'icon-wishlist' -%}
+        </a>
         <a
           href="{{ routes.account_url }}"
           class="hidden md:block text-lyra-text hover:text-lyra-primary transition-colors"
         >
-          {% render 'icon-wishlist' %}
+          {%- render 'icon-account' -%}
         </a>
-
         <a href="{{ routes.cart_url }}" class="relative text-lyra-text hover:text-lyra-primary transition-colors">
           {% render 'icon-shop' %}
-          <span class="absolute -top-2 -right-2 bg-lyra-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-body"
-            >0</span
-          >
-        </a>
-        <a
-          href="{{ routes.account_url }}"
-          class="hidden md:block text-lyra-text hover:text-lyra-primary transition-colors"
-        >
-          {% render 'icon-account' %}
+          <span class="absolute -top-2 -right-2 bg-lyra-primary text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-body">
+            {{- cart.item_count -}}
+          </span>
         </a>
       </div>
     </div>
 
-    <nav class="hidden lg:flex justify-center border-t border-lyra-line/20 w-full relative">
-      <ul class="flex items-center flex-nowrap shrink-0">
-        {% for link in linklists[section.settings.menu].links %}
-          <li class="relative group shrink-0">
+    <nav class="hidden lg:block border-t border-lyra-line/20 relative !overflow-visible">
+      <ul class="flex justify-center gap-10 list-none m-0 p-0 !overflow-visible">
+        {%- for link in linklists[section.settings.menu].links -%}
+          <li class="relative group w-max shrink-0 !overflow-visible">
             <a
               href="{{ link.url }}"
-              class="!mb-0 py-5 px-4 inline-block text-lyra-text group-hover:text-lyra-primary transition-colors uppercase tracking-[0.15em] text-[13px] whitespace-nowrap"
+              class="block py-5 px-1 text-lyra-text group-hover:text-lyra-primary transition-colors uppercase tracking-[0.18em] text-[12px] xl:text-[13px] whitespace-nowrap"
             >
-              {{ link.title }}
-              {% if link.links != blank %}
-                <svg
-                  class="inline-block w-2.5 h-2.5 ml-1 transition-transform group-hover:rotate-180"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M19 9l-7 7-7-7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              {% endif %}
+              <span class="flex items-center">
+                {{ link.title }}
+                {%- if link.links != blank -%}
+                  <svg
+                    class="w-2.5 h-2.5 ml-2 transition-transform group-hover:rotate-180"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M19 9l-7 7-7-7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                {%- endif -%}
+              </span>
             </a>
-
-            {% if link.links != blank %}
-              <ul class="absolute left-1/2 -translate-x-1/2 top-full w-64 bg-white border border-lyra-line/30 shadow-2xl py-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-[999] pointer-events-none group-hover:pointer-events-auto">
-                {% for childlink in link.links %}
-                  <li class="whitespace-nowrap">
-                    <a
-                      href="{{ childlink.url }}"
-                      class="block px-8 py-2.5 text-[11px] uppercase tracking-[0.2em] text-lyra-text/70 hover:text-lyra-primary hover:bg-lyra-bg transition-all font-body"
-                    >
-                      {{ childlink.title }}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% endif %}
+            {%- if link.links != blank -%}
+              <div class="absolute left-0 top-full pt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] min-w-[220px] pointer-events-none group-hover:pointer-events-auto">
+                <ul class="bg-white border border-lyra-line/30 shadow-2xl py-4 mt-0 list-none m-0 p-0 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                  {%- for childlink in link.links -%}
+                    <li>
+                      <a
+                        href="{{ childlink.url }}"
+                        class="block px-6 py-2.5 text-[13px] uppercase tracking-[0.1em] text-lyra-text/70 hover:text-lyra-primary hover:bg-lyra-bg transition-all font-body whitespace-nowrap"
+                      >
+                        {{- childlink.title -}}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
           </li>
-        {% endfor %}
+        {%- endfor -%}
       </ul>
     </nav>
+  </div>
+
+  <div id="mobile-menu-drawer" class="fixed inset-0 z-[2000] lg:hidden invisible transition-all duration-300">
+    <div
+      id="mobile-menu-overlay"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+    ></div>
+
+    <div
+      id="mobile-menu-panel"
+      class="fixed inset-y-0 left-0 w-[85%] max-w-[350px] bg-white shadow-2xl flex flex-col z-[2001] transform -translate-x-full transition-transform duration-300"
+    >
+      <div class="flex items-center justify-between p-6 border-b border-lyra-line/10">
+        <span class="font-heading font-bold tracking-widest text-sm uppercase">Menu</span>
+        <button id="mobile-menu-close" class="p-2 -mr-2 text-lyra-text">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M6 18L18 6M6 6l12 12" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto py-4">
+        <nav class="px-6 space-y-2">
+          {%- for link in linklists[section.settings.menu].links -%}
+            <div class="mobile-nav-item border-b border-lyra-line/5">
+              <div class="flex items-center justify-between cursor-pointer py-3 mobile-row-trigger">
+                {%- if link.links != blank -%}
+                  <span class="text-[14px] font-heading uppercase tracking-widest text-lyra-text flex-1">
+                    {{- link.title -}}
+                  </span>
+                  <button class="mobile-submenu-arrow p-2 transition-transform duration-300 pointer-events-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 9l-7 7-7-7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </button>
+                {%- else -%}
+                  <a
+                    href="{{ link.url }}"
+                    class="text-[14px] font-heading uppercase tracking-widest text-lyra-text flex-1"
+                  >
+                    {{- link.title -}}
+                  </a>
+                {%- endif -%}
+              </div>
+
+              {%- if link.links != blank -%}
+                <div class="mobile-submenu hidden pl-4 pb-4 space-y-3 border-l border-lyra-line/20">
+                  {%- for childlink in link.links -%}
+                    <a
+                      href="{{ childlink.url }}"
+                      class="block text-sm uppercase tracking-wider text-lyra-text/60 py-1 font-body"
+                    >
+                      {{- childlink.title -}}
+                    </a>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </nav>
+      </div>
+
+      <div class="p-6 border-t border-lyra-line/10 space-y-4 bg-lyra-bg/30">
+        <a href="{{ routes.account_url }}" class="flex items-center space-x-3 text-sm uppercase tracking-widest">
+          {% render 'icon-account' %}
+          <span>Account</span>
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -91,6 +172,11 @@
 {
   "name": "Header - Dropdown",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
     {
       "type": "link_list",
       "id": "menu",

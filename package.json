@@ -4,11 +4,11 @@
 	"description": "<h1 align=\"center\" style=\"position: relative;\">\r   <br>\r     <img src=\"./assets/shoppy-x-ray.svg\" alt=\"logo\" width=\"200\">\r   <br>\r   Shopify Skeleton Theme\r </h1>",
 	"main": "index.js",
 	"scripts": {
-		"tailwind:watch": "tailwindcss -i ./assets/tailwind-input.css -o ./assets/style-ouput.css --watch",
-		"shopify:dev": "shopify theme dev",
-		"dev": "concurrently \"npm run tailwind:watch\" \"npm run shopify:dev\"",
-		"tailwind:build": "tailwindcss -i ./assets/tailwind-input.css -o ./assets/style-ouput.css --minify"
+		"tailwind:watch": "tailwindcss -i ./assets/tailwind-input.css -o ./assets/style-output.css --watch",
+		"shopify:dev": "shopify theme dev --store=lyrabeautydev.myshopify.com --theme-editor-sync",
+		"dev": "concurrently \"npm run tailwind:watch\" \"npm run shopify:dev\""
 	},
+	"dependencies": {},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",

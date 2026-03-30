@@ -5,30 +5,105 @@
 @layer base {
 	:root {
 		/* Font Aileleri */
-		--font-heading-family: 'Playfair Display', serif;
-		--font-body-family: 'Inter', sans-serif;
+		--font-heading: 'Playfair Display', serif;
+		--font-body: 'Montserrat', sans-serif;
 
 		/* Renk Paleti */
 		--color-lyra-primary: #c5a381;
-		--color-lyra-bg: #fbf9f7;
+		--color-lyra-secondary: #dcc4ac;
 		--color-lyra-text: #2d2d2d;
+		--color-lyra-bg: #fbf9f7;
+		--color-lyra-line: #e5e1db;
 	}
 
 	body {
-		font-family: var(--font-body-family);
+		font-family: var(--font-body);
 		@apply bg-lyra-bg text-lyra-text antialiased;
 		font-size: 16px;
-		font-weight: 400; /* Body genelde 400 (Regular) olur */
+		font-weight: 400;
+		line-height: 1.6;
+		letter-spacing: 0.01em;
 	}
 
-	/* Başlıklar İçin Global Ayrım */
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		font-family: var(--font-heading-family);
-		@apply font-normal tracking-tight leading-tight;
+	/* Başlık Ayarları */
+	h1 {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(1.875rem, 5vw, 2.5rem);
+		line-height: 1.2;
+		margin-bottom: 1rem;
 	}
+	h2 {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(1.5rem, 4vw, 2rem);
+		line-height: 1.3;
+	}
+	h3 {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: clamp(1.25rem, 3vw, 1.75rem);
+	}
+	h4 {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.25rem;
+	}
+	h5 {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.125rem;
+	}
+	h6 {
+		font-family: var(--font-body); /* Başlıktan ziyade Body fontu (Inter) burada daha modern durur */
+		font-weight: 500; /* Çok kalın olup göz yormasın */
+		font-size: 0.75rem; /* 12px - Küçük ama etkili */
+		text-transform: uppercase; /* Büyük harf vazgeçilmezimiz */
+		letter-spacing: 0.2em; /* 0.05'ten 0.2'ye çıkardık: O meşhur "Lüks Marka" boşluğu */
+		color: var(--color-lyra-primary); /* Vurgu rengimizi verelim */
+		line-height: 1;
+		margin-bottom: 0.5rem;
+		display: block;
+	}
+}
+
+/* --- BUTONLAR BURAYA GELİYOR --- */
+@layer components {
+	/* 1. Primary Button (Dolu/Ana Buton) */
+	.btn-primary {
+		@apply inline-flex items-center justify-center px-8 py-3 
+             bg-lyra-primary text-white font-body text-sm font-medium
+             uppercase tracking-widest transition-all duration-300 ease-in-out
+             hover:bg-lyra-secondary hover:shadow-md active:scale-95 cursor-pointer;
+	}
+
+	/* 2. Outline Button (Çizgili Buton) */
+	.btn-outline {
+		@apply inline-flex items-center justify-center px-8 py-3 
+             border border-lyra-line text-lyra-text font-body text-sm font-medium
+             uppercase tracking-widest transition-all duration-300 ease-in-out
+             hover:border-lyra-primary hover:text-lyra-primary active:scale-95 cursor-pointer;
+	}
+
+	/* 3. Text Button (Sadece Metin/Link) */
+	.btn-link {
+		@apply inline-flex items-center justify-center py-1
+             text-lyra-text font-body text-sm font-medium
+             uppercase tracking-widest relative
+             transition-colors duration-300
+             after:content-[''] after:absolute after:bottom-0 after:left-0 
+             after:w-full after:h-[1px] after:bg-lyra-primary 
+             after:transform after:scale-x-0 after:origin-right 
+             after:transition-transform after:duration-300
+             hover:after:scale-x-100 hover:after:origin-left hover:text-lyra-primary cursor-pointer;
+	}
+}
+
+.shopify-section > * {
+	grid-column: 1 / -1 !important;
+	max-width: none !important;
+}
+
+.shopify-section {
+	display: block !important;
 }

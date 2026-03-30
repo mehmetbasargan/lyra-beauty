@@ -556,38 +556,124 @@ video {
 
 :root {
   /* Font Aileleri */
-  --font-heading-family: 'Playfair Display', serif;
-  --font-body-family: 'Inter', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Montserrat', sans-serif;
   /* Renk Paleti */
   --color-lyra-primary: #c5a381;
-  --color-lyra-bg: #fbf9f7;
+  --color-lyra-secondary: #dcc4ac;
   --color-lyra-text: #2d2d2d;
+  --color-lyra-bg: #fbf9f7;
+  --color-lyra-line: #e5e1db;
 }
 
 body {
-  font-family: var(--font-body-family);
+  font-family: var(--font-body);
   background-color: var(--color-lyra-bg);
   color: var(--color-lyra-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   font-weight: 400;
-  /* Body genelde 400 (Regular) olur */
+  line-height: 1.6;
+  letter-spacing: 0.01em;
 }
 
-/* Başlıklar İçin Global Ayrım */
+/* Başlık Ayarları */
 
-h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-  font-family: var(--font-heading-family);
-  font-weight: 400;
-  line-height: 1.25;
-  letter-spacing: -0.025em;
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.875rem, 5vw, 2.5rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
+
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1.3;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+h6 {
+  font-family: var(--font-body);
+  /* Başlıktan ziyade Body fontu (Inter) burada daha modern durur */
+  font-weight: 500;
+  /* Çok kalın olup göz yormasın */
+  font-size: 0.75rem;
+  /* 12px - Küçük ama etkili */
+  text-transform: uppercase;
+  /* Büyük harf vazgeçilmezimiz */
+  letter-spacing: 0.2em;
+  /* 0.05'ten 0.2'ye çıkardık: O meşhur "Lüks Marka" boşluğu */
+  color: var(--color-lyra-primary);
+  /* Vurgu rengimizi verelim */
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+  }
+}
+
+/* 1. Primary Button (Dolu/Ana Buton) */
+
+/* 2. Outline Button (Çizgili Buton) */
+
+/* 3. Text Button (Sadece Metin/Link) */
 
 .fixed {
   position: fixed;
@@ -621,39 +707,35 @@ h1,
   display: none;
 }
 
-.h-8 {
-  height: 2rem;
-}
-
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.bg-red-600 {
+.bg-red-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
 }
 
-.bg-lyra-bg {
-  background-color: var(--color-lyra-bg);
-}
-
-.bg-lyra-primary {
-  background-color: var(--color-lyra-primary);
-}
-
-.p-8 {
-  padding: 2rem;
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 .italic {
   font-style: italic;
 }
 
-.text-lyra-primary {
-  color: var(--color-lyra-primary);
-}
-
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+/* --- BUTONLAR BURAYA GELİYOR --- */
+
+.shopify-section > * {
+  grid-column: 1 / -1 !important;
+  max-width: none !important;
+}
+
+.shopify-section {
+  display: block !important;
 }

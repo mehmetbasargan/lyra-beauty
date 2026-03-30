@@ -73,47 +73,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Search Popup
 document.addEventListener('DOMContentLoaded', () => {
-	const searchPopup = document.getElementById('search-popup');
+	const searchModal = document.getElementById('search-modal');
 	const searchPanel = document.getElementById('search-panel');
 	const searchOverlay = document.getElementById('search-overlay');
-	const searchTriggers = [
+	const searchInput = searchModal.querySelector('input[name="q"]');
+	const closeBtn = document.getElementById('search-close-btn');
+
+	const triggers = [
 		document.getElementById('search-trigger-desktop'),
 		document.getElementById('search-trigger-mobile'),
 	];
-	const searchClose = document.getElementById('search-close');
-	const searchInput = searchPopup.querySelector('input[name="q"]');
 
 	const openSearch = (e) => {
 		if (e) e.preventDefault();
-		searchPopup.classList.remove('invisible');
-		// Kısa bir delay ile animasyonu başlatıyoruz
+		searchModal.classList.remove('invisible');
+
+		// Trigger animations
 		setTimeout(() => {
 			searchOverlay.classList.add('opacity-100');
 			searchPanel.classList.remove('-translate-y-full');
-			searchInput.focus(); // Açılınca direkt klavye odaklanır
+			searchInput.focus();
 		}, 10);
-		document.body.style.overflow = 'hidden'; // Arka plan kaymasın
+
+		document.body.classList.add('overflow-hidden');
 	};
 
 	const closeSearch = () => {
 		searchOverlay.classList.remove('opacity-100');
 		searchPanel.classList.add('-translate-y-full');
+
 		setTimeout(() => {
-			searchPopup.classList.add('invisible');
+			searchModal.classList.add('invisible');
 		}, 500);
-		document.body.style.overflow = '';
+
+		document.body.classList.remove('overflow-hidden');
 	};
 
-	searchTriggers.forEach((trigger) => {
+	// Event Listeners
+	triggers.forEach((trigger) => {
 		if (trigger) trigger.addEventListener('click', openSearch);
 	});
 
-	if (searchClose) searchClose.addEventListener('click', closeSearch);
+	if (closeBtn) closeBtn.addEventListener('click', closeSearch);
 	if (searchOverlay) searchOverlay.addEventListener('click', closeSearch);
 
-	// ESC tuşu ile kapatma
+	// Keyboard Support
 	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape' && !searchPopup.classList.contains('invisible')) {
+		if (e.key === 'Escape' && !searchModal.classList.contains('invisible')) {
 			closeSearch();
 		}
 	});

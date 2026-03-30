@@ -8,8 +8,8 @@
   data-section-type="header"
 >
   <div class="container mx-auto px-4 md:px-8">
-    <div class="flex items-center justify-between py-6 md:py-2">
-      <div class="flex flex-1 items-center space-x-5">
+    <div class="flex items-center justify-between py-6 lg:py-2">
+      <div class="flex flex-1 items-center">
         <button id="mobile-menu-trigger" type="button" class="lg:hidden text-lyra-text p-1" aria-label="Open Menu">
           {% render 'icon-menuIcon' %}
         </button>
@@ -39,46 +39,19 @@
         </a>
       </div>
 
-      <div class="flex flex-1 items-center justify-end space-x-6">
-        <a href="#" class="block lg:hidden text-lyra-text hover:text-lyra-primary transition-colors">
+      <div class="flex flex-1 items-center justify-end gap-2">
+        <a
+          href="#"
+          id="search-trigger-mobile"
+          class="block lg:hidden text-lyra-text hover:text-lyra-primary transition-colors"
+        >
           {% render 'icon-search' %}
         </a>
         <a href="{{ pages['wishlist'].url }}" class="text-lyra-text hover:text-lyra-primary transition-colors">
           {%- render 'icon-wishlist' -%}
         </a>
 
-        <style>
-          /* Bileşenin içindeki varsayılanları temizle */
-          shopify-account::part(signed-out-avatar),
-          shopify-account::part(signed-in-avatar) {
-            background: transparent !important;
-            padding: 0 !important;
-            width: 32px;
-            height: 32px;
-          }
-
-          .account-initials-circle {
-            width: 32px;
-            height: 32px;
-            background-color: var(--lyra-primary, #000);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-          }
-
-          .account-icon-svg svg {
-            width: 24px;
-            height: 24px;
-            display: block;
-          }
-        </style>
-
-        <div class="hidden md:block account-wrapper relative">
+        <div class="hidden lg:block account-wrapper relative">
           <shopify-account menu="customer-account-main-menu">
             <div slot="signed-out-avatar" class="account-icon-svg">
               {% render 'icon-account' %}
@@ -245,7 +218,7 @@
             type="text"
             name="q"
             placeholder="{{ 'search.placeholder' | t }}"
-            class="w-full bg-transparent border-b-2 border-lyra-line focus:border-lyra-primary py-4 text-xl md:text-3xl font-heading uppercase tracking-widest outline-none transition-colors"
+            class="w-full bg-transparent border-b-2 border-lyra-line focus:border-lyra-primary py-4 text-xl md:text-2xl font-heading uppercase tracking-widest outline-none transition-colors rounded-none"
             autocomplete="off"
           >
           <button type="submit" class="absolute right-0 top-1/2 -translate-y-1/2">
@@ -255,8 +228,8 @@
 
         <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h3 class="text-[10px] uppercase tracking-[0.2em] text-lyra-text/50 mb-4 font-bold">Popular Categories</h3>
-            <ul class="space-y-2 text-sm uppercase tracking-widest font-heading">
+            <h5 class="uppercase tracking-[0.2em] text-lyra-text mb-4 font-bold">Popular Categories</h5>
+            <ul class="space-y-2 uppercase tracking-widest font-heading">
               <li><a href="/collections/skincare" class="hover:text-lyra-primary transition-colors">Skincare</a></li>
               <li><a href="/collections/makeup" class="hover:text-lyra-primary transition-colors">Makeup</a></li>
               <li><a href="/collections/fragrance" class="hover:text-lyra-primary transition-colors">Fragrance</a></li>
@@ -270,6 +243,35 @@
 </div>
 
 <style>
+  /* Bileşenin içindeki varsayılanları temizle */
+  shopify-account::part(signed-out-avatar),
+  shopify-account::part(signed-in-avatar) {
+    background: transparent !important;
+    padding: 0 !important;
+    width: 32px;
+    height: 32px;
+  }
+
+  .account-initials-circle {
+    width: 32px;
+    height: 32px;
+    background-color: var(--lyra-primary, #000);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  /* .account-icon-svg svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+  } */
+
   /* Ana Header Durumu */
   header {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -309,6 +311,38 @@
   header.is-sticky img {
     max-height: 40px; /* Mevcut logo boyutuna göre ayarla */
     transition: all 0.4s ease;
+  }
+
+  /* modal */
+
+  #search-modal {
+    /* would-change: Tarayıcıyı önceden uyarır */
+    will-change: visibility, opacity;
+  }
+
+  #search-panel {
+    /* transition: 'all' yerine sadece gerekenleri yazıyoruz */
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    /* backface-visibility: Titremeyi önler ve GPU'yu tetikler */
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+    /* GPU Hızlandırma zorlaması */
+    transform: translateY(-100%) translateZ(0);
+  }
+
+  /* Blur efekti performansı çok düşürebilir. 
+     Eğer hala kasıyorsa backdrop-blur değerini düşürün veya kaldırın. */
+  #search-overlay {
+    transition: opacity 0.4s linear;
+    will-change: opacity;
+    /* Donanım hızlandırmalı opacity */
+    transform: translateZ(0);
+  }
+
+  /* Animasyon aktifken transform kullanımı */
+  #search-modal.is-active #search-panel {
+    transform: translateY(0) translateZ(0);
   }
 </style>
 

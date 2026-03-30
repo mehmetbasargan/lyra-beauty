@@ -74,53 +74,39 @@ document.addEventListener('DOMContentLoaded', () => {
 // Search Popup
 document.addEventListener('DOMContentLoaded', () => {
 	const searchModal = document.getElementById('search-modal');
-	const searchPanel = document.getElementById('search-panel');
-	const searchOverlay = document.getElementById('search-overlay');
 	const searchInput = searchModal.querySelector('input[name="q"]');
-	const closeBtn = document.getElementById('search-close-btn');
-
 	const triggers = [
 		document.getElementById('search-trigger-desktop'),
 		document.getElementById('search-trigger-mobile'),
 	];
 
-	const openSearch = (e) => {
-		if (e) e.preventDefault();
-		searchModal.classList.remove('invisible');
-
-		// Trigger animations
-		setTimeout(() => {
-			searchOverlay.classList.add('opacity-100');
-			searchPanel.classList.remove('-translate-y-full');
-			searchInput.focus();
-		}, 10);
-
-		document.body.classList.add('overflow-hidden');
-	};
-
-	const closeSearch = () => {
-		searchOverlay.classList.remove('opacity-100');
-		searchPanel.classList.add('-translate-y-full');
-
-		setTimeout(() => {
-			searchModal.classList.add('invisible');
-		}, 500);
-
-		document.body.classList.remove('overflow-hidden');
-	};
-
-	// Event Listeners
-	triggers.forEach((trigger) => {
-		if (trigger) trigger.addEventListener('click', openSearch);
-	});
-
-	if (closeBtn) closeBtn.addEventListener('click', closeSearch);
-	if (searchOverlay) searchOverlay.addEventListener('click', closeSearch);
-
-	// Keyboard Support
-	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape' && !searchModal.classList.contains('invisible')) {
-			closeSearch();
+	const toggleSearch = (open) => {
+		if (open) {
+			searchModal.classList.remove('invisible');
+			// 'requestAnimationFrame' tarayıcının bir sonraki karede
+			// en akıcı şekilde işlemesini sağlar (setTimeout'tan daha iyidir)
+			requestAnimationFrame(() => {
+				searchModal.classList.add('is-active');
+				// Input focus işlemini animasyon bitince yaparsak kasma azalır
+				setTimeout(() => searchInput.focus(), 400);
+			});
+			document.body.classList.add('overflow-hidden');
+		} else {
+			searchModal.classList.remove('is-active');
+			setTimeout(() => {
+				searchModal.classList.add('invisible');
+			}, 500); // CSS süresiyle aynı olmalı
+			document.body.classList.remove('overflow-hidden');
 		}
-	});
+	};
+
+	triggers.forEach((t) =>
+		t?.addEventListener('click', (e) => {
+			e.preventDefault();
+			toggleSearch(true);
+		}),
+	);
+
+	document.getElementById('search-close-btn')?.addEventListener('click', () => toggleSearch(false));
+	document.getElementById('search-overlay')?.addEventListener('click', () => toggleSearch(false));
 });
